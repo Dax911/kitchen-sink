@@ -1,20 +1,21 @@
 import Head from 'next/head';
-import useEffect from 'react'
+import useState from 'react'
 import { useWen } from "wen-connect";
-
-
+import { walletWen } from '../components/welletWen'
 
 export default function Home() {
   const { connect, disconnect, wallet } = useWen();
+  const alertState = false
 
   const handleConnect = () => {
     // Optional argument to specify which chain to get the user connected on.
     connect({ chainId: "0xa86a" });
-  };
+}
 
   const handleDisconnect = () => {
     disconnect();
   };
+
 
   return (
     <div>
@@ -29,8 +30,8 @@ export default function Home() {
       </div>
       <div className="items-center flex h-screen w-screen relative justify-between ">
       <div className="p-8 flex justify-between items-center max-w-2xl flex-col md:flex-row animate-fade-in">
-      <button className="btn-primary rounded center-item p-6 text-xl" onClick={handleConnect}> Alert Connect </button>
-      <div className="alert shadown-lg rounded alert-success md:flex-row animate-fade-in">{wallet.address}</div>
+      <button className="btn-primary rounded center-item p-6 text-xl" onClick={handleConnect} > Alert Connect </button>
+      <div className="alert shadown-lg rounded alert-success md:flex-row animate-fade-in">{alertState ? true : `${wallet.address}`}</div>
                 <div className="p-8 italic text-xl">{"or"}</div>
       <button className="btn-primary rounded center-item p-6 text-xl" onClick={handleDisconnect}> Alert Disconnect </button>
       </div>
