@@ -1,15 +1,8 @@
 import React, { useEffect } from "react";
 
-const MyComponent = ({walletaddress}: any) => {
-  const [showElement, setShowElement] = React.useState(true);
-  useEffect(() => {
-    setTimeout(function () {
-      setShowElement(false);
-    }, 5000);
-  }, []);
+const MyComponent = ( {walletaddress}: any, showElement = true) => 
 
-if (showElement === true) {
-  return (
+showElement ?
     <div>
       <div>
           <div className="md:flex-row animate-fade-in">
@@ -18,9 +11,8 @@ if (showElement === true) {
           </div>
         {" "}
       </div>
-    </div>
-  );
-}
-};
+    </div> : false
+
+
 
 export default MyComponent;

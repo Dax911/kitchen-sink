@@ -1,10 +1,20 @@
 import Head from 'next/head';
-import useState from 'react'
-import { useWen } from "wen-connect";
+import React, { useState, useEffect } from 'react'
+import { getSession, useWen } from "wen-connect";
 import { walletWen } from '../components/welletWen'
 import MyComponent from '../components/alertComponent'
-export default function Home() {
-  const { connect, disconnect, wallet } = useWen();
+
+
+export default function Home(props) {
+  const { connect, disconnect } = useWen();
+  const { wallet } = useWen(props.session);
+
+  const [showElement, setShowElement] = React.useState(true);
+  useEffect(() => {
+    setTimeout(function () {
+      setShowElement(false);
+    }, 5000);
+  }, []);
 
   const handleConnect = () => {
     // Optional argument to specify which chain to get the user connected on.
@@ -15,7 +25,6 @@ export default function Home() {
     disconnect();
   };
 
-const walletadd = wallet.address
   return (
     <div>
       <Head>
@@ -29,8 +38,8 @@ const walletadd = wallet.address
       </div>
       <div className="items-center flex h-screen w-screen relative justify-between ">
       <div className="p-8 flex justify-between items-center max-w-2xl flex-col md:flex-row animate-fade-in">
-      <button className="btn-primary rounded center-item p-6 text-xl" onClick={handleConnect} > Alert Connect </button>
-      <MyComponent walletaddress={wallet.address} />
+      <button className="btn-primary rounded center-item p-6 text-xl" onClick={() => MyComponent(wallet.address, showElement)} > Alert Connect </button>
+      <MyComponent walletaddress={wallet.address} showElement={showElement}} />
                 <div className="p-8 italic text-xl">{"or"}</div>
       <button className="btn-primary rounded center-item p-6 text-xl" onClick={handleDisconnect}> Alert Disconnect </button>
       </div>
